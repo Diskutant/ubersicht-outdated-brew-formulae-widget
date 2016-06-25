@@ -35,7 +35,7 @@ style: """
 """
 
 render: -> """
-  <div class="container">
+  <div class="container" style="display:none;">
     <div class="widget-title">Outdated Brews</div>
     <div id="formulae" class="list">
     </div>
@@ -54,8 +54,10 @@ update: (output, domElement) ->
     list.append item
     
   if formulae.length == 1
-  	#no outdated formulae, hide the widget
-    $(domElement).find('.container').parent().attr("style", "display:none;")
+    if formulae[0] == ""
+      $(domElement).find('.container').parent().attr("style", "display:none;")
+    else
+      addFormula(formula)
   else
     $(domElement).find('.container').parent().attr("style", "display:block;")
     for formula, i in formulae
